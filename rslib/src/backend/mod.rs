@@ -5,6 +5,7 @@
 #![allow(clippy::unnecessary_wraps)]
 
 mod adding;
+mod ankidroid;
 mod card;
 mod cardrendering;
 mod collection;
@@ -41,6 +42,7 @@ use slog::Logger;
 use tokio::runtime::{self, Runtime};
 
 use self::{
+    ankidroid::AnkidroidService,
     card::CardsService,
     cardrendering::CardRenderingService,
     collection::CollectionService,
@@ -128,6 +130,7 @@ impl Backend {
         pb::ServiceIndex::from_i32(service as i32)
             .ok_or_else(|| AnkiError::invalid_input("invalid service"))
             .and_then(|service| match service {
+                pb::ServiceIndex::Ankidroid => AnkidroidService::run_method(self, method, input),
                 pb::ServiceIndex::Scheduler => SchedulerService::run_method(self, method, input),
                 pb::ServiceIndex::Decks => DecksService::run_method(self, method, input),
                 pb::ServiceIndex::Notes => NotesService::run_method(self, method, input),

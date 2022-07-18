@@ -20,6 +20,7 @@ pub type Result<T, E = AnkiError> = std::result::Result<T, E>;
 
 #[derive(Debug, PartialEq)]
 pub enum AnkiError {
+    FatalError(String),
     InvalidInput(String),
     TemplateError(String),
     CardTypeError(CardTypeError),
@@ -119,6 +120,7 @@ impl AnkiError {
             AnkiError::FileIoError(err) => {
                 format!("{}: {}", err.path, err.error)
             }
+            AnkiError::FatalError(err) => err.to_owned(),
         }
     }
 

@@ -13,6 +13,7 @@ macro_rules! protobuf {
     };
 }
 
+protobuf!(ankidroid);
 protobuf!(backend);
 protobuf!(card_rendering);
 protobuf!(cards);
