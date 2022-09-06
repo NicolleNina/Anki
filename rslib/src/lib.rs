@@ -18,6 +18,7 @@ pub mod error;
 pub mod findreplace;
 pub mod i18n;
 pub mod import_export;
+pub mod image_occlusion;
 mod io;
 pub mod latex;
 pub mod links;

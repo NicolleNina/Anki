@@ -16,6 +16,7 @@ mod error;
 mod generic;
 mod i18n;
 mod import_export;
+mod image_occlusion;
 mod links;
 mod media;
 mod notes;
@@ -49,6 +50,7 @@ use self::{
     decks::DecksService,
     i18n::I18nService,
     import_export::ImportExportService,
+    image_occlusion::ImageOcclusionService,
     links::LinksService,
     media::MediaService,
     notes::NotesService,
@@ -148,6 +150,9 @@ impl Backend {
                 pb::ServiceIndex::Cards => CardsService::run_method(self, method, input),
                 pb::ServiceIndex::ImportExport => {
                     ImportExportService::run_method(self, method, input)
+                }
+                pb::ServiceIndex::ImageOcclusion => {
+                    ImageOcclusionService::run_method(self, method, input)
                 }
             })
             .map_err(|err| {
