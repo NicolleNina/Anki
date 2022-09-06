@@ -1,0 +1,51 @@
+// Copyright: Ankitects Pty Ltd and contributors
+// License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
+
+syntax = "proto3";
+
+option java_multiple_files = true;
+
+package anki.image_occlusion;
+
+import "anki/cards.proto";
+import "anki/collection.proto";
+import "anki/notes.proto";
+import "anki/generic.proto";
+
+service ImageOcclusionService {
+  rpc GetImageClozeMetadata(ImageClozeMetadataRequest) returns (ImageClozeMetadata);
+  rpc AddImageOcclusionNotes(AddImageOcclusionNotesRequest) returns (ResultAddNotes);
+}
+
+message ImageClozeMetadataRequest {
+  string path = 1;
+}
+
+message ImageClozeMetadata {
+  bytes data = 1;
+  string name = 2;
+  int64 deck_id = 3;
+
+  message MappedNotetype {
+    int64 id = 4;
+    // Source column indices for note fields. One-based. 0 means n/a.
+    repeated uint32 field_columns = 5;
+  }
+
+  oneof notetype {
+    // One notetype for all rows with given column mapping.
+    MappedNotetype global_notetype = 6;
+    // Row-specific notetypes with automatic mapping by index.
+    // One-based. 0 means n/a.
+    uint32 notetype_column = 7;
+  }
+}
+
+message AddImageOcclusionNotesRequest {
+  string image_path = 1;
+  bytes notes_data = 2;
+}
+
+message ResultAddNotes {
+  bool is_added = 1;
+}
