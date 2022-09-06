@@ -21,6 +21,7 @@ License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
     import { setFormat } from "../old-editor-adapter";
     import { editingInputIsRichText } from "../rich-text-input";
     import { micIcon, paperclipIcon } from "./icons";
+    import ImageOcclusionButton from "./ImageOcclusionButton.svelte";
     import LatexButton from "./LatexButton.svelte";
 
     const { focusedInput } = context.get();
@@ -117,6 +118,9 @@ License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
 
         <ButtonGroupItem>
             <LatexButton />
+        </ButtonGroupItem>
+        <ButtonGroupItem>
+            <ImageOcclusionButton />
         </ButtonGroupItem>
     </DynamicallySlottable>
 </ButtonGroup>

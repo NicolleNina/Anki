@@ -1,0 +1,89 @@
+load("//ts:prettier.bzl", "prettier_test")
+load("//ts:eslint.bzl", "eslint_test")
+load("//ts/svelte:svelte.bzl", "compile_svelte", "svelte_check")
+load("//ts:esbuild.bzl", "esbuild")
+load("//ts:generate_page.bzl", "generate_page")
+load("//ts:compile_sass.bzl", "compile_sass")
+load("//ts:typescript.bzl", "typescript")
+
+generate_page(page = "image-occlusion")
+
+compile_sass(
+    srcs = ["image-occlusion-base.scss"],
+    group = "base_css",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//sass:base_lib",
+        "//sass:scrollbar_lib",
+        "//sass/bootstrap",
+    ],
+)
+
+_ts_deps = [
+    "//ts/components",
+    "//ts/lib",
+    "//ts/sveltelib",
+    "@npm//@fluent",
+    "@npm//@types/jest",
+    "@npm//lodash-es",
+    "@npm//svelte",
+    "@npm//marked",
+    "@npm//fabric",
+    "@npm//panzoom"
+]
+
+compile_svelte(
+    visibility = ["//visibility:public"],
+    deps = _ts_deps
+)
+
+typescript(
+    name = "index",
+    deps = _ts_deps + [
+        ":svelte",
+    ],
+)
+
+esbuild(
+    name = "image-occlusion",
+    args = {
+        "globalName": "anki",
+        "loader": {".svg": "text"},
+    },
+    entry_point = "index.ts",
+    output_css = "image-occlusion.css",
+    visibility = ["//visibility:public"],
+    deps = [
+        ":base_css",
+        ":index",
+        ":svelte",
+        "//ts/tag-editor",
+        "//ts/icons",
+        "@npm//@mdi",
+        "@npm//bootstrap-icons",
+        "@npm//fabric"
+    ],
+)
+
+# Tests
+################
+
+prettier_test()
+
+eslint_test()
+
+svelte_check(
+    name = "svelte_check",
+    srcs = glob([
+        "*.ts",
+        "*.svelte",
+    ]) + [
+        "//sass:button_mixins_lib",
+        "//sass/bootstrap",
+        "@npm//@types/bootstrap",
+        "@npm//@types/lodash-es",
+        "@npm//@types/marked",
+        "@npm//@types/fabric",
+        "//ts/components",
+    ],
+)
