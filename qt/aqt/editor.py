@@ -56,6 +56,7 @@ from aqt.utils import (
     tr,
 )
 from aqt.webview import AnkiWebView
+from aqt.imageocclusion import ImageOcclusionDialog
 
 pics = ("jpg", "jpeg", "png", "tif", "tiff", "gif", "svg", "webp", "ico")
 audio = (
@@ -1155,6 +1156,27 @@ require("anki/ui").loaded.then(() => require("anki/NoteEditor").instances[0].too
         # hackily redraw the page
         self.setupWeb()
         self.loadNoteKeepingFocus()
+        
+    def onImageOcclusion(self) -> None:
+        """Show a file selection screen, then get selected image path."""
+        extension_filter = " ".join(
+            f"*.{extension}" for extension in sorted(itertools.chain(pics))
+        )
+        filter = f"{tr.editing_media()} ({extension_filter})"
+
+        def accept(file: str) -> None:
+            diag = ImageOcclusionDialog(self.mw, file)
+            
+
+        file = getFile(
+            parent=self.widget,
+            title=tr.editing_add_media(),
+            cb=cast(Callable[[Any], None], accept),
+            filter=filter,
+            key="media",
+        )
+
+        self.parentWindow.activateWindow()
 
     # Links from HTML
     ######################################################################
@@ -1183,6 +1205,7 @@ require("anki/ui").loaded.then(() => require("anki/NoteEditor").instances[0].too
             mathjaxBlock=Editor.insertMathjaxBlock,
             mathjaxChemistry=Editor.insertMathjaxChemistry,
             toggleMathjax=Editor.toggleMathjax,
+            imageOcclusion=Editor.onImageOcclusion,
         )
 
 

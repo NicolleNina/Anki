@@ -450,6 +450,17 @@ def import_csv() -> bytes:
     aqt.mw.taskman.run_on_main(handle_on_main)
     return b""
 
+def image_occlusion() -> bytes:
+    data = request.data
+
+    def handle_on_main() -> None:
+        window = aqt.mw.app.activeWindow()
+        if isinstance(window, ImageOcclusionDialog):
+            window.do_image_occlusion(data)
+
+    aqt.mw.taskman.run_on_main(handle_on_main)
+    return b""
+
 
 post_handler_list = [
     congrats_info,
@@ -459,6 +470,7 @@ post_handler_list = [
     set_scheduling_states,
     change_notetype,
     import_csv,
+    image_occlusion,
 ]
 
 
@@ -482,6 +494,9 @@ exposed_backend_list = [
     "set_graph_preferences",
     # TagsService
     "complete_tag",
+    # ImageOcclusionService
+    "get_image_cloze_metadata",
+    "add_image_occlusion_notes"
 ]
 
 

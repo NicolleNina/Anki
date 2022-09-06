@@ -8,6 +8,7 @@ _pages = [
     "card-info",
     "fields",
     "import-csv",
+    "image-occlusion",
 ]
 
 [copy_files_into_group(
