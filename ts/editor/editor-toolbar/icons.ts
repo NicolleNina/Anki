@@ -24,3 +24,4 @@ export { default as justifyRightIcon } from "bootstrap-icons/icons/text-right.sv
 export { default as boldIcon } from "bootstrap-icons/icons/type-bold.svg";
 export { default as italicIcon } from "bootstrap-icons/icons/type-italic.svg";
 export { default as underlineIcon } from "bootstrap-icons/icons/type-underline.svg";
+export { default as imagePlus } from "@mdi/svg/svg/image-plus.svg";
