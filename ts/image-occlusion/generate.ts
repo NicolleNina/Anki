@@ -1,6 +1,5 @@
-import type { fabric } from "fabric";
 import { addImageOcclusionNotes } from "./lib";
-import { getAnswerMaskColor } from "./tools";
+import { getAnswerMaskColor } from "./tools/lib";
 import { noteFieldsData } from "./store";
 import { get } from "svelte/store";
 

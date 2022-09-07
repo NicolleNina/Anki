@@ -13,7 +13,6 @@
     getImageClozeMetadata(path).then((meta) => {
         canvas = new fabric.Canvas("canvas", {
             hoverCursor: "pointer",
-            selection: true,
             selectionBorderColor: "green",
         });
 
@@ -39,7 +38,12 @@
     });
 
     function initPanzoom(node) {
-        instance = panzoom(node);
+        instance = panzoom(node, {
+            bounds: true,
+            maxZoom: 3,
+            minZoom: 0.1,
+            zoomDoubleClickSpeed: 1,
+        });
         instance.pause();
     }
 </script>
@@ -54,8 +58,8 @@
 <style lang="scss">
     .editor-main {
         position: absolute;
-        top: 64px;
-        left: 40px;
+        top: 52px;
+        left: 38px;
         bottom: 46px;
         right: 2px;
         border: 1px solid rgb(96, 141, 225);

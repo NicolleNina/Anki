@@ -9,3 +9,8 @@ export { default as mdiRectangleOutline } from "@mdi/svg/svg/rectangle-outline.s
 export { default as mdiCircleOutline } from "@mdi/svg/svg/circle-outline.svg";
 export { default as mdiDeleteOutline } from "@mdi/svg/svg/delete-outline.svg";
 export { default as mdiPalette } from "@mdi/svg/svg/palette.svg";
+export { default as mdiGroup } from "@mdi/svg/svg/group.svg";
+export { default as mdiCopy } from "@mdi/svg/svg/content-copy.svg";
+export { default as mdiZoomIn } from "@mdi/svg/svg/magnify-plus-outline.svg";
+export { default as mdiZoomReset } from "@mdi/svg/svg/magnify-expand.svg";
+export { default as mdiZoomOut } from "@mdi/svg/svg/magnify-minus-outline.svg";

@@ -59,7 +59,6 @@
         "@floating-ui/dom": "^0.3.0",
         "@fluent/bundle": "^0.17.0",
         "@mdi/svg": "^7.0.96",
-        "@panzoom/panzoom": "^4.5.0",
         "@popperjs/core": "^2.9.2",
         "@types/fabric": "^4.5.11",
         "@types/lodash-es": "^4.17.4",

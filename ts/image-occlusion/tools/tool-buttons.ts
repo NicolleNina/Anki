@@ -3,9 +3,8 @@ import {
     mdiMagnify,
     mdiRectangleOutline,
     mdiCircleOutline,
-    mdiDeleteOutline,
     mdiPalette,
-} from "./icons";
+} from "../icons";
 
 export let tools = [
     {
@@ -23,10 +22,6 @@ export let tools = [
     {
         id: "draw-circle",
         icon: mdiCircleOutline,
-    },
-    {
-        id: "delete-item",
-        icon: mdiDeleteOutline,
     },
     {
         id: "choose-color",

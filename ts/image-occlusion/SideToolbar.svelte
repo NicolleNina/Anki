@@ -1,14 +1,14 @@
 <script>
     import IconButton from "../components/IconButton.svelte";
-    import { tools } from "./tool-buttons";
+    import { tools } from "./tools/tool-buttons";
     import {
-        deleteItem,
         disableSelectable,
-        drawCircle,
-        drawRectangle,
         enableSelectable,
         stopDraw,
-    } from "./tools";
+    } from "./tools/lib";
+    import { drawCircle, drawRectangle } from "./tools/index";
+    import ColorDialog from "./ColorDialog.svelte";
+    import BottomToolbar from "./BottomToolbar.svelte";
 
     export let instance;
     export let canvas;
@@ -25,10 +25,6 @@
             drawRectangle(canvas);
         } else if (toolId === "draw-circle") {
             drawCircle(canvas);
-        } else if (toolId === "delete-item") {
-            deleteItem(canvas);
-        } else if (toolId === "choose-color") {
-            document.querySelector(".color-dialog").style.display = "flex";
         } else {
             enableSelectable(canvas);
         }
@@ -38,11 +34,6 @@
         instance.pause();
         stopDraw(canvas);
         disableSelectable(canvas);
-        document.querySelector(".color-dialog").style.display = "none";
-    };
-
-    const setColor = (type, color) => {
-        localStorage.setItem(type, color);
     };
 </script>
 
@@ -59,35 +50,16 @@
     </div>
 </div>
 
-<div class="color-dialog">
-    <div class="color-btn-container">
-        <label for="ques-color">Question Mask Color</label>
-        <input
-            type="color"
-            id="ques-color"
-            value={localStorage.getItem("ques-color")
-                ? localStorage.getItem("ques-color")
-                : "#000"}
-            on:change={(e) => setColor("ques-color", e.target.value)}
-        />
-    </div>
-    <div class="color-btn-container">
-        <label for="ans-color">Answer Mask Color</label>
-        <input
-            type="color"
-            id="ans-color"
-            value={localStorage.getItem("ans-color")
-                ? localStorage.getItem("ans-color")
-                : "#000"}
-            on:change={(e) => setColor("ans-color", e.target.value)}
-        />
-    </div>
-</div>
+{#if activeTool === "choose-color"}
+    <ColorDialog />
+{/if}
+
+<BottomToolbar {canvas} {activeTool} {instance}/>
 
 <style>
     .tool-bar-container {
         position: fixed;
-        top: 64px;
+        top: 52px;
         left: 0;
         height: 100%;
         border-right: 1px solid #e3e3e3;
@@ -109,23 +81,5 @@
     :global(.active-tool) {
         color: red !important;
         background: unset !important;
-    }
-    :global(.color-dialog) {
-        display: none;
-        flex-direction: column;
-        position: fixed;
-        z-index: 1;
-        left: 40px;
-        top: 200px;
-        overflow: auto;
-        background: white;
-        padding: 16px;
-    }
-
-    :global(.color-btn-container) {
-        display: inline-grid;
-        text-align: left;
-        justify-items: left;
-        margin: 2px;
     }
 </style>

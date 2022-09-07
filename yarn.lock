@@ -597,11 +597,6 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@mdi/svg@^7.0.96":
-  version "7.0.96"
-  resolved "https://registry.yarnpkg.com/@mdi/svg/-/svg-7.0.96.tgz#c7275a318da8594337243368c6b4dca6a90154f6"
-  integrity sha512-5DC+w7Kl2C82j4aTWCUf6wtHzgY60WBf1gT1qrpkLaMNcH6Vj9FpYPAXdSmtdkmSMvVMs8i1Rtv9cXWcHFQYpw==
-
 "@mapbox/node-pre-gyp@^1.0.0":
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/@mapbox/node-pre-gyp/-/node-pre-gyp-1.0.9.tgz#09a8781a3a036151cdebbe8719d6f8b25d4058bc"
@@ -616,6 +611,11 @@
     rimraf "^3.0.2"
     semver "^7.3.5"
     tar "^6.1.11"
+
+"@mdi/svg@^7.0.96":
+  version "7.0.96"
+  resolved "https://registry.yarnpkg.com/@mdi/svg/-/svg-7.0.96.tgz#c7275a318da8594337243368c6b4dca6a90154f6"
+  integrity sha512-5DC+w7Kl2C82j4aTWCUf6wtHzgY60WBf1gT1qrpkLaMNcH6Vj9FpYPAXdSmtdkmSMvVMs8i1Rtv9cXWcHFQYpw==
 
 "@mdn/browser-compat-data@^3.3.14":
   version "3.3.14"
@@ -642,11 +642,6 @@
   dependencies:
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
-
-"@panzoom/panzoom@^4.5.0":
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/@panzoom/panzoom/-/panzoom-4.5.0.tgz#bba5b13633f395fd0f197d80065659f6e0182338"
-  integrity sha512-j1tmgKt4UZaCNHq78g+HrvwgEa0jPPy1EFL4Yqu+826ITr7kj8bfee0Ns9q9wd8XEP5HLHfZAii9RCVB68Jl5A==
 
 "@popperjs/core@^2.9.2":
   version "2.11.4"
