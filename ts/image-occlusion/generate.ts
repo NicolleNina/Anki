@@ -5,11 +5,11 @@ import { noteFieldsData } from "./store";
 import { get } from "svelte/store";
 
 export function generate(
-    canvas: fabric.Canvas,
     imagePath: string,
     generateTye: string,
     deckId: number
 ): void {
+    let canvas = globalThis.canvas;
     let canvasObjects = canvas.getObjects();
 
     let occlusionNotes = `<div id='io_cloze' answer-mask-color='${getAnswerMaskColor()}'>`;

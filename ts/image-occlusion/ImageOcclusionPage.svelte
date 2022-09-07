@@ -3,20 +3,12 @@ Copyright: Ankitects Pty Ltd and contributors
 License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
 -->
 <script lang="ts">
-    import { fabric } from "fabric";
     import { generate } from "./generate";
-    import { getImageClozeMetadata } from "./lib";
-    import SideToolbar from "./SideToolbar.svelte";
     import StickyFooter from "./StickyFooter.svelte";
-    import panzoom, { PanZoom } from "panzoom";
-    import Tabs from "./Tabs.svelte";
     import Notes from "./Notes.svelte";
-    import DeckSelector from "./DeckSelector.svelte";
     import type { Decks, ImageOcclusion, Notetypes } from "../lib/proto";
+    import MasksEditor from "./MasksEditor.svelte";
     import Container from "../components/Container.svelte";
-    import Col from "../components/Col.svelte";
-    import Row from "../components/Row.svelte";
-    import NotetypeSelector from "./NotetypeSelector.svelte";
 
     export let path: string;
     export let data: string;
@@ -25,88 +17,42 @@ License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
     export let notetypeNameIds: Notetypes.NotetypeNameId[];
     export let globalNotetype: ImageOcclusion.ImageClozeMetadata.MappedNotetype | null;
 
-    let instance: PanZoom;
-
-    let canvas: fabric.Canvas;
-    getImageClozeMetadata(path).then((meta) => {
-        canvas = new fabric.Canvas("canvas", {
-            hoverCursor: "pointer",
-            selection: true,
-            selectionBorderColor: "green",
-        });
-
-        // for debug in devtools
-        globalThis.canvas = canvas;
-
-        // get image width and height
-        let image = new Image();
-        image.onload = function () {
-            canvas.setWidth(image.width);
-            canvas.setHeight(image.height);
-
-            fabric.Image.fromURL(image.src, function (image) {
-                canvas.setBackgroundImage(image, canvas.renderAll.bind(canvas), {
-                    scaleX: canvas.width! / image.width!,
-                    scaleY: canvas.height! / image.height!,
-                });
-            });
-        };
-
-        image.src = data;
-        image.remove();
-    });
-
-    function initPanzoom(node) {
-        instance = panzoom(node);
-        instance.pause();
-    }
-
     async function hideAllGuessOne(): Promise<void> {
-        generate(canvas, path, "hidden", deckId!);
+        generate(path, "hidden", deckId!);
     }
 
     async function hideOneGuessOne(): Promise<void> {
-        generate(canvas, path, "shown", deckId!);
+        generate(path, "shown", deckId!);
     }
 
-    let items = ["Masks Editor", "Fields"];
-    let activeItem = "Masks Editor";
-    const tabChange = (e: { detail: string }) => (activeItem = e.detail);
+    let items = [
+        { label: "Masks", value: 1 },
+        { label: "Notes", value: 2 },
+    ];
+
+    let activeTabValue = 1;
+    const tabChange = (tabValue) => () => (activeTabValue = tabValue);
 </script>
 
 <Container class="image-occlusion">
-    <Tabs {activeItem} {items} on:tabChange={tabChange} />
+    <ul>
+        {#each items as item}
+            <li class={activeTabValue === item.value ? "active" : ""}>
+                <span on:click={tabChange(item.value)}>{item.label}</span>
+            </li>
+        {/each}
+    </ul>
 
-    <div hidden={activeItem !== "Masks Editor"}>
-        <div><SideToolbar {instance} {canvas} /></div>
-        <div class="editor-main">
-            <div class="editor-container" use:initPanzoom>
-                <canvas id="canvas" />
-            </div>
-        </div>
+    <div hidden={activeTabValue != 1}>
+        <MasksEditor {path} {data} />
     </div>
 
-    <div hidden={activeItem !== "Fields"}>
-        <Row --cols={2}>
-            <Col --col-size={1} breakpoint="md">
-                <Container>
-                    {#if globalNotetype}
-                        <NotetypeSelector
-                            {notetypeNameIds}
-                            bind:notetypeId={globalNotetype.id}
-                        />
-                    {/if}
-                    {#if deckId}
-                        <DeckSelector {deckNameIds} bind:deckId />
-                    {/if}
-                </Container>
-            </Col>
-        </Row>
-        <Notes />
+    <div hidden={activeTabValue != 2}>
+        <Notes {deckNameIds} {deckId} {notetypeNameIds} {globalNotetype} />
     </div>
-
-    <StickyFooter {hideAllGuessOne} {hideOneGuessOne} />
 </Container>
+
+<StickyFooter {hideAllGuessOne} {hideOneGuessOne} />
 
 <style lang="scss">
     :global(.image-occlusion) {
@@ -120,18 +66,33 @@ License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
             min-height: 3em;
         }
     }
-    .editor-main {
-        position: absolute;
-        top: 46px;
-        left: 40px;
-        bottom: 46px;
-        right: 2px;
-        border: 2px solid rgb(96, 141, 225);
-        overflow: auto;
+    ul {
+        display: flex;
+        flex-wrap: wrap;
+        padding-left: 0;
+        list-style: none;
+        border-bottom: 1px solid #dee2e6;
+    }
+    li {
+        margin-bottom: -1px;
     }
 
-    .editor-container {
-        width: 100%;
-        height: 100%;
+    span {
+        border: 1px solid transparent;
+        border-top-left-radius: 0.25rem;
+        border-top-right-radius: 0.25rem;
+        display: block;
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+    }
+
+    span:hover {
+        border-color: #e9ecef #e9ecef #dee2e6;
+    }
+
+    li.active > span {
+        color: #495057;
+        background-color: #fff;
+        border-color: #dee2e6 #dee2e6 #fff;
     }
 </style>

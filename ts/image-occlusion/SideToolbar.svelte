@@ -87,7 +87,7 @@
 <style>
     .tool-bar-container {
         position: fixed;
-        top: 46px;
+        top: 64px;
         left: 0;
         height: 100%;
         border-right: 1px solid #e3e3e3;
