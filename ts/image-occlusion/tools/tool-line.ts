@@ -1,9 +1,9 @@
 import { fabric } from "fabric";
 import { getQuestionMaskColor, stopDraw } from "./lib";
 
-let line, isDown;
-
 export const drawLine = (canvas: any) => {
+    let line, isDown;
+
     stopDraw(canvas);
 
     let strokeColor = getQuestionMaskColor()!;
@@ -32,7 +32,9 @@ export const drawLine = (canvas: any) => {
         });
         canvas.renderAll();
     });
+
     canvas.on("mouse:up", function (o) {
         isDown = false;
+        line.setCoords();
     });
 };

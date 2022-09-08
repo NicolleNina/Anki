@@ -1,11 +1,7 @@
 <script>
     import IconButton from "../components/IconButton.svelte";
     import { tools } from "./tools/tool-buttons";
-    import {
-        disableSelectable,
-        enableSelectable,
-        stopDraw,
-    } from "./tools/lib";
+    import { enableSelectable, stopDraw } from "./tools/lib";
     import { drawCircle, drawRectangle } from "./tools/index";
     import ColorDialog from "./ColorDialog.svelte";
     import BottomToolbar from "./BottomToolbar.svelte";
@@ -19,21 +15,21 @@
         activeTool = toolId;
         disableFunctions();
 
-        if (toolId === "magnify") {
+        if (toolId === "cursor") {
+            enableSelectable(canvas, true);
+        } else if (toolId === "magnify") {
             instance.resume();
         } else if (toolId === "draw-rectangle") {
             drawRectangle(canvas);
         } else if (toolId === "draw-circle") {
             drawCircle(canvas);
-        } else {
-            enableSelectable(canvas);
         }
     }
 
     const disableFunctions = () => {
         instance.pause();
         stopDraw(canvas);
-        disableSelectable(canvas);
+        enableSelectable(canvas, false);
     };
 </script>
 
@@ -54,7 +50,7 @@
     <ColorDialog />
 {/if}
 
-<BottomToolbar {canvas} {activeTool} {instance}/>
+<BottomToolbar {canvas} {activeTool} {instance} />
 
 <style>
     .tool-bar-container {

@@ -64,5 +64,6 @@ export const drawRectangle = (canvas: any) => {
         if (height < 5 && width < 5) {
             canvas.remove(rect);
         }
+        rect.setCoords();
     });
 };

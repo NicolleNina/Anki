@@ -20,6 +20,7 @@ export const drawCircle = (canvas: any) => {
             fill: getQuestionMaskColor()!,
             originX: "center",
             originY: "center",
+            transparentCorners: false,
             selectable: false,
         });
 
@@ -44,6 +45,7 @@ export const drawCircle = (canvas: any) => {
         let radius = Math.abs(origX - pointer.x);
         if (radius < 5) {
             canvas.remove(circle);
-        }
+        }        
+        circle.setCoords();
     });
 };

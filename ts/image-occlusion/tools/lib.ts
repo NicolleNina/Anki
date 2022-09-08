@@ -6,18 +6,12 @@ export const stopDraw = (canvas: any) => {
     canvas.off("mouse:move");
 };
 
-export const disableSelectable = (canvas: any) => {
-    canvas.selection = false;
+export const enableSelectable = (canvas: any, select: boolean) => {
+    canvas.selection = select;
     canvas.forEachObject(function (o) {
-        o.selectable = false;
+        o.selectable = select;
     });
-};
-
-export const enableSelectable = (canvas: any) => {
-    canvas.selection = true;
-    canvas.forEachObject(function (o) {
-        o.selectable = true;
-    });
+    canvas.renderAll();
 };
 
 export const deleteItem = (canvas: any) => {
