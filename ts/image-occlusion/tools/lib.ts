@@ -1,3 +1,6 @@
+import { zoomResetValue } from "../store";
+import { get } from "svelte/store";
+
 let _clipboard: any;
 
 export const stopDraw = (canvas: any) => {
@@ -64,14 +67,14 @@ export const zoomOut = (instance) => {
 
 export const zoomReset = (instance) => {
     instance.moveTo(0, 0);
-    instance.zoomAbs(0, 0, 1);
+    instance.zoomAbs(0, 0, get(zoomResetValue));
 };
 
 const copyItem = (canvas: any) => {
     if (!canvas.getActiveObject()) {
         return;
     }
-    
+
     // clone what are you copying since you
     // may want copy and paste on different moment.
     // and you do not want the changes happened

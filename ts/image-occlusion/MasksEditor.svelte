@@ -3,11 +3,13 @@
     import panzoom, { PanZoom } from "panzoom";
     import { fabric } from "fabric";
     import SideToolbar from "./SideToolbar.svelte";
+    import { zoomResetValue } from "./store";
 
     export let path: string;
     export let data: string;
 
     let instance: PanZoom;
+    let innerWidth = 0;
 
     let canvas: fabric.Canvas;
     getImageClozeMetadata(path).then((meta) => {
@@ -30,6 +32,10 @@
                     scaleX: canvas.width! / image.width!,
                     scaleY: canvas.height! / image.height!,
                 });
+
+                let zoomRatio = innerWidth / canvas.width!;
+                zoomResetValue.set(zoomRatio);
+                instance.smoothZoom(0, 0, zoomRatio);
             });
         };
 
@@ -49,7 +55,7 @@
 </script>
 
 <div><SideToolbar {instance} {canvas} /></div>
-<div class="editor-main">
+<div class="editor-main" bind:clientWidth={innerWidth}>
     <div class="editor-container" use:initPanzoom>
         <canvas id="canvas" />
     </div>
