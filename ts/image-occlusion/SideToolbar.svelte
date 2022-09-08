@@ -2,7 +2,7 @@
     import IconButton from "../components/IconButton.svelte";
     import { tools } from "./tools/tool-buttons";
     import { enableSelectable, stopDraw } from "./tools/lib";
-    import { drawCircle, drawRectangle } from "./tools/index";
+    import { addText, drawCircle, drawRectangle } from "./tools/index";
     import ColorDialog from "./ColorDialog.svelte";
     import BottomToolbar from "./BottomToolbar.svelte";
 
@@ -23,6 +23,8 @@
             drawRectangle(canvas);
         } else if (toolId === "draw-circle") {
             drawCircle(canvas);
+        } else if (toolId === "add-text") {
+            addText(canvas);
         }
     }
 

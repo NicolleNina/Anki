@@ -4,6 +4,7 @@ import {
     mdiRectangleOutline,
     mdiCircleOutline,
     mdiPalette,
+    mdiText,
 } from "../icons";
 
 export let tools = [
@@ -22,6 +23,10 @@ export let tools = [
     {
         id: "draw-circle",
         icon: mdiCircleOutline,
+    },
+    {
+        id: "add-text",
+        icon: mdiText,
     },
     {
         id: "choose-color",

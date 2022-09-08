@@ -14,3 +14,4 @@ export { default as mdiCopy } from "@mdi/svg/svg/content-copy.svg";
 export { default as mdiZoomIn } from "@mdi/svg/svg/magnify-plus-outline.svg";
 export { default as mdiZoomReset } from "@mdi/svg/svg/magnify-expand.svg";
 export { default as mdiZoomOut } from "@mdi/svg/svg/magnify-minus-outline.svg";
+export { default as mdiText } from "@mdi/svg/svg/format-textbox.svg";
