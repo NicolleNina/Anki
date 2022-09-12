@@ -49,10 +49,9 @@ License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
 
     <div hidden={activeTabValue != 2}>
         <Notes {deckNameIds} {deckId} {notetypeNameIds} {globalNotetype} />
+        <StickyFooter {hideAllGuessOne} {hideOneGuessOne} />
     </div>
 </Container>
-
-<StickyFooter {hideAllGuessOne} {hideOneGuessOne} />
 
 <style lang="scss">
     :global(.image-occlusion) {

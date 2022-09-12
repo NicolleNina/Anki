@@ -15,3 +15,5 @@ export { default as mdiZoomIn } from "@mdi/svg/svg/magnify-plus-outline.svg";
 export { default as mdiZoomReset } from "@mdi/svg/svg/magnify-expand.svg";
 export { default as mdiZoomOut } from "@mdi/svg/svg/magnify-minus-outline.svg";
 export { default as mdiText } from "@mdi/svg/svg/format-textbox.svg";
+export { default as mdiUndo } from "@mdi/svg/svg/undo.svg";
+export { default as mdiRedo } from "@mdi/svg/svg/redo.svg";

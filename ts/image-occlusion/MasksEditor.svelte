@@ -4,6 +4,7 @@
     import { fabric } from "fabric";
     import SideToolbar from "./SideToolbar.svelte";
     import { zoomResetValue } from "./store";
+    import { undoRedoInit } from "./tools/tool-undo-redo";
 
     export let path: string;
     export let data: string;
@@ -39,6 +40,8 @@
             });
         };
 
+        undoRedoInit(canvas);
+
         image.src = data;
         image.remove();
     });
@@ -66,7 +69,7 @@
         position: absolute;
         top: 52px;
         left: 38px;
-        bottom: 46px;
+        bottom: 2px;
         right: 2px;
         border: 1px solid rgb(96, 141, 225);
         overflow: auto;
