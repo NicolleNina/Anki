@@ -1,56 +1,58 @@
-<div style="display: none">{{cloze:Occlusions}}</div>
-
-<canvas
-    id="canvas"
-    style="background-size: 100% 100%; max-width: 100%; max-height: 90vh"
->
+<div style="display:none;">{{cloze:Occlusions}}</div>
+<canvas id="canvas" style="background-size: 100% 100%; max-width: 100%; max-height: 90vh;">
 </canvas>
-
-<div style="display: none">{{Image}}</div>
+<div style="display:none;">{{Image}}</div>
 
 <script>
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
-
+    
     var img = new Image();
-
     img.onload = function () {
         canvas.width = img.width;
         canvas.height = img.height;
         ctx.drawImage(img, 0, 0);
         drawShapes(ctx);
     };
-
     img.src = document.getElementById("img").src;
 
     function drawShapes(ctx) {
         var ioCloze = document.getElementById("io_cloze");
         for (cloze of ioCloze.children) {
-            var shape = cloze.getAttribute("shape");
-            var xywh = cloze.getAttribute("ioxywh");
-            xywh = xywh.split(",").map(Number);
+            var shape = cloze.dataset.shape;
+            var qColor = cloze.dataset.fill;
+            var aColor = ioCloze.dataset.answerMaskColor;
 
             if (cloze.children.length) {
-                if (
-                    cloze.children[0].className == "cloze" &&
-                    cloze.children[0].innerText == "[prompted]"
-                ) {
-                    draw(shape, "red", xywh);
+                if (cloze.children[0].className == "cloze" && cloze.children[0].innerText == "[prompted]") {
+                    draw(shape, qColor);
                 }
             } else {
                 if (cloze.innerText.trim() == "hidden") {
-                    draw(shape, "green", xywh);
+                    draw(shape, aColor);
                 }
             }
         }
     }
 
-    function draw(shape, color, xywh) {
+    function draw(shape, color) {
         ctx.fillStyle = color;
 
         switch (shape) {
             case "rect":
+                var xywh = cloze.dataset.xywh;
+                xywh = xywh.split(',').map(Number);
                 ctx.fillRect(xywh[0], xywh[1], xywh[2], xywh[3]);
+                break;
+
+            case "ellipse":
+                var xywh = cloze.dataset.xywh;
+                var rx = cloze.dataset.rx;
+                var ry = cloze.dataset.ry;
+                xywh = xywh.split(',').map(Number);
+                ctx.beginPath();
+                ctx.ellipse(xywh[0], xywh[1], rx, ry, 0, 0, Math.PI * 2, false);
+                ctx.fill();
                 break;
         }
     }
