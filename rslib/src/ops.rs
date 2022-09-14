@@ -17,6 +17,7 @@ pub enum Op {
     CreateCustomStudy,
     EmptyFilteredDeck,
     FindAndReplace,
+    ImageOcclusion,
     Import,
     RebuildFilteredDeck,
     RemoveDeck,
@@ -24,11 +25,12 @@ pub enum Op {
     RemoveNotetype,
     RemoveTag,
     RenameDeck,
-    ReparentDeck,
     RenameTag,
+    ReparentDeck,
     ReparentTag,
     ScheduleAsNew,
     SetCardDeck,
+    SetCurrentDeck,
     SetDueDate,
     SetFlag,
     SortCards,
@@ -39,10 +41,9 @@ pub enum Op {
     UpdateDeck,
     UpdateDeckConfig,
     UpdateNote,
+    UpdateNotetype,
     UpdatePreferences,
     UpdateTag,
-    UpdateNotetype,
-    SetCurrentDeck,
     /// Does not register changes in undo queue, but does not clear the current
     /// queue either.
     SkipUndo,
@@ -90,6 +91,8 @@ impl Op {
             Op::Custom(name) => name.into(),
             Op::ChangeNotetype => tr.browsing_change_notetype(),
             Op::SkipUndo => return "".to_string(),
+            // TODO: i18n
+            Op::ImageOcclusion => "Image Occlusion".into(),
         }
         .into()
     }

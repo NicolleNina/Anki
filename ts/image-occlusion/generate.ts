@@ -29,7 +29,7 @@ export function generate(imagePath: string, generateTye: string, deckId: number)
     occlusionNotes += clozeDiv + "</div>";
     console.log(occlusionNotes);
 
-    saveImageNotes(imagePath, occlusionNotes);
+    saveImageNotes(imagePath, occlusionNotes, deckId);
 }
 
 const getRectCloze = (object, index, generateTye, points) => {
@@ -101,7 +101,11 @@ const getObjectPositionInGroup = (group, object) => {
     return { top, left };
 };
 
-const saveImageNotes = async function (imagePath: string, notes: string) {
+const saveImageNotes = async function (
+    imagePath: string,
+    notes: string,
+    deckId: number,
+) {
     const fieldsData = get(noteFieldsData);
     fieldsData["occlusions"] = notes;
 
@@ -110,5 +114,5 @@ const saveImageNotes = async function (imagePath: string, notes: string) {
         fieldsDataStr.split("").map((x) => x.charCodeAt(0)),
     );
 
-    await addImageOcclusionNotes(imagePath, noteData);
+    await addImageOcclusionNotes(imagePath, noteData, deckId);
 };
