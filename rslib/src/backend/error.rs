@@ -15,6 +15,7 @@ impl AnkiError {
         let context = self.context();
         let backtrace = self.backtrace();
         let kind = match self {
+            AnkiError::FatalError { .. } => Kind::FatalError,
             AnkiError::InvalidInput { .. } => Kind::InvalidInput,
             AnkiError::TemplateError { .. } => Kind::TemplateParse,
             AnkiError::DbError { .. } => Kind::DbError,

@@ -26,6 +26,9 @@ pub type Result<T, E = AnkiError> = std::result::Result<T, E>;
 
 #[derive(Debug, PartialEq, Eq, Snafu)]
 pub enum AnkiError {
+    FatalError {
+        info: String,
+    },
     #[snafu(context(false))]
     InvalidInput {
         source: InvalidInputError,
@@ -137,6 +140,7 @@ impl AnkiError {
             AnkiError::InvalidId => tr.errors_invalid_ids().into(),
             AnkiError::JsonError { .. }
             | AnkiError::ProtoError { .. }
+            | AnkiError::FatalError { .. }
             | AnkiError::Interrupted
             | AnkiError::CollectionNotOpen
             | AnkiError::CollectionAlreadyOpen
